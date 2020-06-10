@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Home from './components/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      accountBalance: 14568.27
+    }
+  }
+  render() {
+    const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
+    return (
+      <Router>
+        <Switch>
+          {/* This was doesn't work cause Route components expect us to pass a "reference" to a component as our component= prop.
+          This means we can't pass an already-built component */}
+          {/* <Route exact path="/" component={<Home accountBalance={this.state.accountBalance}/>}/> */}
+          
+          {/* If you need to pass props at the Router level, you must use render */}
+          <Route exact path="/" render={HomeComponent}/>
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
